@@ -12,14 +12,14 @@ Après avoir récupérer le dossier PMosquito en le clonant à partir de la comm
 
 Il est conseillé de se mettre dans un environnement virtuel :   
 
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+	python -m venv venv
+	source venv/bin/activate  # Linux/macOS
+	venv\Scripts\activate     # Windows
 
 
 Pour faire focntionner l'outil vous aurez besoin d'installer des dépendances
 
-pip install -r requirements.txt
+	pip install -r requirements.txt
 
 Assurez-vous que pandas, numpy, scikit-learn, matplotlib et seaborn sont bien installés.
 
