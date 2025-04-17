@@ -14,10 +14,11 @@ Il est conseillé de se mettre dans un environnement virtuel :
 ```
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
+```
 
 ```
 venv\Scripts\activate     # Windows
-
+```
 
 Pour faire focntionner l'outil vous aurez besoin d'installer des dépendances
 
