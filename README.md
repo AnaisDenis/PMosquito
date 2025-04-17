@@ -30,12 +30,13 @@ Assurez-vous que pandas, numpy, scikit-learn, matplotlib et seaborn sont bien in
 
 Ce dossier est structuré de la façon suivante :
 
+```
 📁 PMosquito/
 ├── main.py                    # Script principal
 ├── utils.py                   # Fonctions utilitaires (clustering, calculs, visualisations)
 ├── requirements.txt           # Dépendances Python
 └── jeu_test.csv               # Exemple de jeu de données (à fournir)
-
+```
 
 ## 📈 Choix du mode de lancement
 
