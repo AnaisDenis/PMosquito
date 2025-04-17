@@ -1,0 +1,36 @@
+# 🐍 Environnement virtuel
+venv
+.env
+
+# 🧹 Fichiers Python compilés  temporaires
+__pycache__
+.py[cod]
+.pyo
+.pyd
+.pkl
+
+# 📦 Dépendances (si jamais générées)
+.egg-info
+.eggs
+
+# 💻 Configuration IDE  éditeurs
+.vscode
+.idea
+.swp
+
+# 🗃 Jupyter
+.ipynb_checkpoints
+
+# 📄 Fichiers CSV générés par l’analyse
+.csv
+!jeu_test.csv  # - garde ton fichier d'entrée si tu veux le versionner
+
+# 🔒 Fichiers système
+.DS_Store
+Thumbs.db
+
+# 📊 Résultats d'exécution
+matrice_spatiotemporelle.csv
+connexions_valides.csv
+connexions_non_optimisees.csv
+jeu_test_moustiques_avec_features.csv
