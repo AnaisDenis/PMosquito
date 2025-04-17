@@ -14,6 +14,7 @@ Il est conseillé de se mettre dans un environnement virtuel :
 
 	python -m venv venv
 	source venv/bin/activate  # Linux/macOS
+ 
 	venv\Scripts\activate     # Windows
 
 
