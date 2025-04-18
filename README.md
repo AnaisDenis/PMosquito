@@ -11,28 +11,32 @@ Il propose une analyse manuelle ou automatique basée sur des paramètres de clu
 Après avoir récupérer le dossier PMosquito en le clonant à partir de la commande suivante : 
 
 Il est conseillé de se mettre dans un environnement virtuel :   
-
+```
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+```
 
+```
+venv\Scripts\activate     # Windows
+```
 
 Pour faire focntionner l'outil vous aurez besoin d'installer des dépendances
 
-pip install -r requirements.txt
+	pip install -r requirements.txt
 
-    Assurez-vous que pandas, numpy, scikit-learn, matplotlib et seaborn sont bien installés.
+Assurez-vous que pandas, numpy, scikit-learn, matplotlib et seaborn sont bien installés.
 
 ## 📂 Structure
 
 Ce dossier est structuré de la façon suivante :
 
+```
 📁 PMosquito/
 ├── main.py                    # Script principal
 ├── utils.py                   # Fonctions utilitaires (clustering, calculs, visualisations)
 ├── requirements.txt           # Dépendances Python
 └── jeu_test.csv               # Exemple de jeu de données (à fournir)
-
+```
 
 ## 📈 Choix du mode de lancement
 
