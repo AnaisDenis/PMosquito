@@ -163,7 +163,7 @@ def cluster_objects(df, n_clusters, debug=False):
         'XSplined', 'YSplined', 'ZSplined',
         'VXSplined', 'VYSplined', 'VZSplined', 'Speed',
         'AXSplined', 'AYSplined', 'AZSplined', 'Acceleration',
-        'TangentialAcceleration', 'Curvature', 'DistanceTravelled'
+        'TangentialAcceleration',  'DistanceTravelled', 'Curvature'
     ]
 
     # Moyenne des valeurs de chaque colonne par objet
@@ -399,16 +399,27 @@ def score_lien(row, temps_min, features_obj, connexions_df,
         bonus
     )
 
-def garder_connexion_optimale(connexions, df, features,
+def garder_connexion_optimale(connexions, df, features=None,
                               poids_temps=1.0,
                               poids_distance=1.0,
                               poids_ressemblance=1.0,
                               bonus_cible_source=0.0):
-    connexions_df = pd.DataFrame(connexions, columns=["objet_source", "objet_cible", "cluster"])
+    # Gérer le cas sans cluster
+    if features is None:
+        # Utiliser toutes les colonnes numériques moyennées par objet
+        colonnes_valables = df.select_dtypes(include=[np.number]).columns.tolist()
+        colonnes_valables = [col for col in colonnes_valables if col != "time"]
+        features = df.groupby("object")[colonnes_valables].mean()
 
-    # Dictionnaires d'accès rapide
+    # Cas avec ou sans cluster (si elle existe)
+    if 'cluster' in features.columns:
+        connexions_df = pd.DataFrame(connexions, columns=["objet_source", "objet_cible", "cluster"])
+        features_obj = features.drop(columns=['cluster'])
+    else:
+        connexions_df = pd.DataFrame(connexions, columns=["objet_source", "objet_cible"])
+        features_obj = features
+
     temps_min = df.groupby('object')['time'].min().to_dict()
-    features_obj = features.drop(columns=['cluster'])
 
     connexions_df['score'] = connexions_df.apply(
         lambda row: score_lien(
@@ -434,14 +445,14 @@ def garder_connexion_optimale(connexions, df, features,
     for _, row in connexions_df.iterrows():
         source = row['objet_source']
         cible = row['objet_cible']
+        cluster = row['cluster'] if 'cluster' in row else -1  # ou None
 
         # Un seul lien sortant par source et un seul entrant par cible
         if source not in sources_utilisées and cible not in cibles_utilisées:
-            connexions_finales.append((source, cible, row['cluster']))
+            connexions_finales.append((source, cible, cluster))
             sources_utilisées.add(source)
             cibles_utilisées.add(cible)
 
-    # Trier les connexions finales par objet_source croissant
     connexions_finales_df = pd.DataFrame(
         connexions_finales,
         columns=["objet_source", "objet_cible", "cluster"]
@@ -450,6 +461,7 @@ def garder_connexion_optimale(connexions, df, features,
     connexions_finales_df = connexions_finales_df.sort_values(by="objet_source")
 
     return connexions_finales_df
+
 
 def reconstituer_trajectoires(df_connexions):
     # Construction d'un graphe simple

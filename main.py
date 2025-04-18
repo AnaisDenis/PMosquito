@@ -27,9 +27,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.auto_analyse:
-        seuils_temps_test = [0.2, 0.5, 1]
-        seuils_distance_test = [0.1, 0.5, 1]
-        nombre_clusters = [3, 6, 8]
+        seuils_temps_test = [0.4]
+        seuils_distance_test = [0.5 ]
+        nombre_clusters = [2, 5, 8, 10, 15, 20]
         auto_analyse_resultat = auto_analyse(args.csv_path, seuils_temps_test, seuils_distance_test, nombre_clusters, debug=args.debug)
 
         # Rechargement du CSV pour effectuer la reconstitution des trajectoires après l'auto-analyse
@@ -46,68 +46,54 @@ if __name__ == "__main__":
 
     else:
 
+        # Étape 1 : Construction de la matrice spatio-temporelle
         matrice_df = comparer_objets(args.csv_path, args.seuil_temps, args.seuil_distance, debug=args.debug)
 
-
-        # Affichage heatmap
         if args.debug:
             print("📊 Affichage de la heatmap des connexions...")
             plot_heatmap(matrice_df)
-            # Sauvegarde CSV
             matrice_df.to_csv("matrice_spatiotemporelle.csv")
             print("✅ Matrice spatio-temporelle sauvegardée dans 'matrice_spatiotemporelle.csv'")
 
-
+        # Chargement des données et enrichissement
         df = pd.read_csv(args.csv_path, delimiter=';')
-        # Ajouter les nouveaux paramètres avant le clustering
-        df = ajouter_parametres_trajectoire(args.csv_path)  # Enrichir les données
+        df = ajouter_parametres_trajectoire(args.csv_path)
 
-        features = cluster_objects(df, n_clusters=args.n_clusters, debug=args.debug)
-
-        # Création du fichier final de connexions valides (non optimisées)
-        objets_connectes = []
-        for obj1 in matrice_df.index:
-            for obj2 in matrice_df.columns:
-                if matrice_df.loc[obj1, obj2] == 1:
-                    if features.loc[obj1, 'cluster'] == features.loc[obj2, 'cluster']:
-                        objets_connectes.append((obj1, obj2, int(features.loc[obj1, 'cluster'])))
+        # Étape 2 : Génération des connexions initiales (spatio-temporelles uniquement)
+        objets_connectes = [
+            (obj1, obj2)
+            for obj1 in matrice_df.index
+            for obj2 in matrice_df.columns
+            if matrice_df.loc[obj1, obj2] == 1
+        ]
 
         if args.debug:
-        # Sauvegarde des connexions non optimisées
-            pd.DataFrame(objets_connectes, columns=["objet_source", "objet_cible", "cluster"]).to_csv(
-                "connexions_non_optimisees.csv", index=False)
-            print("✅ Connexions non optimisées sauvegardées dans 'connexions_non_optimisees.csv'")
-        else :
-            print("✅ Connexions non optimisées effectuées")
-        # Optimisation des connexions en utilisant les critères pondérés
+            pd.DataFrame(objets_connectes, columns=["objet_source", "objet_cible"]).to_csv(
+                "connexions_spatiotemporelles.csv", index=False)
+            print("✅ Connexions spatio-temporelles sauvegardées dans 'connexions_spatiotemporelles.csv'")
+        else:
+            print("✅ Connexions spatio-temporelles détectées")
+
+        # Étape 3 : Optimisation des connexions selon les pondérations fournies
         meilleures_connexions = garder_connexion_optimale(
             objets_connectes,
             df,
-            features,
+            features=None,  # Plus besoin de clusters
             poids_temps=args.poids_temps,
             poids_distance=args.poids_distance,
             poids_ressemblance=args.poids_ressemblance,
             bonus_cible_source=args.bonus_cible_source
         )
-        # Typage propre
-        meilleures_connexions = meilleures_connexions.astype({
-            "objet_source": int,
-            "objet_cible": int,
-            "cluster": int
-        })
 
-        # Regrouper les connexions en chaînes de trajectoires
+        # Étape 4 : Reconstitution des trajectoires complètes
         connexions_groupées = reconstituer_trajectoires(meilleures_connexions)
 
         if args.debug:
-            # Export au format souhaité
             connexions_groupées.to_csv("connexions_valides.csv", sep=';', index=False)
             print("✅ Connexions groupées sauvegardées dans 'connexions_valides.csv' 🧩")
-        else :
+        else:
             print("✅ Connexions groupées effectuées")
 
-        # Sauvegarder le fichier des trajectoires reconstituées avec filtrage par durée
-        seuil_duree = args.time_min_reconstitute  # Exemple de seuil de durée (en temps)
+        # Étape 5 : Filtrage par durée minimale et sauvegarde finale
+        seuil_duree = args.time_min_reconstitute
         save_reconstituted_file(args.csv_path, connexions_groupées, df, seuil_duree)
-
-
