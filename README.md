@@ -1,4 +1,4 @@
-🦟 PMosquito – Reconstructing Mosquito Trajectories
+#🦟 PMosquito – Reconstructing Mosquito Trajectories
 
 This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data.
 It supports both manual and automatic analysis based on clustering and proximity parameters.
