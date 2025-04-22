@@ -98,11 +98,11 @@ Here's a sample command to run the program:
 
 In this example:
 
-    - Connected mosquitoes must be no more than 0.2m apart and within 0.4s of each other.
+- Connected mosquitoes must be no more than 0.2m apart and within 0.4s of each other.
 
-    - The debug flag enables detailed logging and intermediate results.
+- The debug flag enables detailed logging and intermediate results.
 
-    - Trajectories shorter than 10 seconds are excluded from the final CSV output.
+- Trajectories shorter than 10 seconds are excluded from the final CSV output.
 
 📬 Contact
 
