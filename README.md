@@ -91,7 +91,7 @@ You can customize trajectory reconstruction using the following parameters:
 
 ▶️ Run Example
 
-Here's a sample command to run the program:
+Here's an example command to run the program:
 
 	C:\Your_path_to\PMosquito\ > python main.py path_to_your_file.csv --seuil_temps 0.4 --seuil_distance 0.2 --debug --time-min-reconstitute 10.0
 
@@ -108,4 +108,5 @@ In this example:
 
 For questions or suggestions, please contact:
 olivier.roux@ird.fr
+
 Project developed as part of a Master's thesis on mosquito behavior analysis.
