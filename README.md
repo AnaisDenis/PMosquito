@@ -26,7 +26,7 @@ Example (excerpt):
 
 First, clone the PMosquito folder using:
 
-	git clone <repository_url>
+	git clone <https://github.com/AnaisDenis/PMosquito.git>
 
 It is recommended to use a virtual environment:
 ```
