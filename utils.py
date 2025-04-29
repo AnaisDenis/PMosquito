@@ -4,7 +4,6 @@ from math import sqrt
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import seaborn as sns
-import itertools
 import os
 
 #################################################################################
@@ -79,7 +78,7 @@ def ajouter_parametres_trajectoire(csv_path):
     # Sauvegarde
     new_csv_path = csv_path.replace(".csv", "_avec_features.csv")
     df.to_csv(new_csv_path, sep=";", index=False)
-    print(f"✅ Fichier enrichi sauvegardé : {new_csv_path}")
+    print(f"Fichier enrichi sauvegardé : {new_csv_path}")
 
     return df
 
@@ -140,10 +139,6 @@ def comparer_objets(data, seuil_temps, seuil_distance, debug=False):
 
     matrice_df = pd.DataFrame(matrice, index=objets, columns=objets)
 
-    if debug:
-        print("📊 Matrice spatio-temporelle :")
-        print(matrice_df)
-
     return matrice_df
 
 
@@ -175,14 +170,14 @@ def cluster_objects(df, n_clusters, debug=False):
     if debug:
         n_total = features.shape[0]
         n_clean = features_clean.shape[0]
-        print(f"\n📉 Objets ignorés à cause de valeurs manquantes : {n_total - n_clean} / {n_total}")
+        print(f"Objets ignorés à cause de valeurs manquantes : {n_total - n_clean} / {n_total}")
 
     # Appliquer le KMeans
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     features_clean['cluster'] = kmeans.fit_predict(features_clean)
 
     if debug:
-        print("\n🧠 Résumé des clusters trouvés :")
+        print(" Résumé des clusters trouvés :")
         print(features_clean['cluster'].value_counts())
         print(features_clean[['cluster']])
 
@@ -192,7 +187,6 @@ def cluster_objects(df, n_clusters, debug=False):
 
 def extraire_chaines_connexes(matrice, clusters, debug=False):
 
-    objets = matrice.index.tolist()
     objets_par_cluster = clusters.groupby("cluster").groups
 
     chaines = []
@@ -202,7 +196,7 @@ def extraire_chaines_connexes(matrice, clusters, debug=False):
         sous_matrice = matrice.loc[objets_cluster, objets_cluster]
 
         if debug:
-            print(f"\n🔍 Cluster {cluster_id} → objets : {objets_cluster}")
+            print(f" Cluster {cluster_id} → objets : {objets_cluster}")
             print("Sous-matrice :")
             print(sous_matrice)
 
@@ -221,13 +215,13 @@ def extraire_chaines_connexes(matrice, clusters, debug=False):
                 dfs(obj, chaine)
                 if len(chaine) > 1:
                     if debug:
-                        print(f"🔗 Chaîne détectée : {chaine}")
+                        print(f"Chaîne détectée : {chaine}")
                     chaines.append({'cluster': cluster_id, 'objects': chaine})
 
     return pd.DataFrame(chaines)
 
 # -----------------------------------------------------------------------------
-#                         FONCTIONS DEBUG
+#                         FONCTIONS Graphiques
 # -----------------------------------------------------------------------------
 
 def plot_heatmap(matrice_df, title="Matrice de connexions"):
@@ -240,120 +234,184 @@ def plot_heatmap(matrice_df, title="Matrice de connexions"):
     plt.savefig("heatmap_matrice.png")
     plt.show()
 
+def plot_reconstitute(csv_file, output_file="reconstitution_graphique.png"):
+    """
+    Lit un fichier CSV, trace 'object' en fonction de 'time' et sauvegarde le graphique.
 
-# -----------------------------------------------------------------------------
-#                         FONCTIONS AUTO-ANALYSE
-# -----------------------------------------------------------------------------
+    :param csv_file: Chemin vers le fichier CSV
+    :param output_file: Nom du fichier de sortie pour sauvegarder le graphique (PNG par défaut)
+    """
+    # Lecture du fichier CSV
+    df = pd.read_csv(csv_file, sep=";")
 
-def auto_analyse(csv_path, seuils_temps, seuils_distance, n_clusters, debug=False):
-    print("🔍 Lancement du mode auto-analyse...")
+    # Vérification des colonnes nécessaires
+    required_cols = {'time', 'object', 'oldobject'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"Le fichier CSV doit contenir les colonnes {required_cols}.")
 
-    resultats = []
+    # Conversion time si besoin
+    if not pd.api.types.is_numeric_dtype(df['time']):
+        df['time'] = pd.to_datetime(df['time'])
 
-    # Charger et enrichir les données une seule fois
-    try:
-        df = ajouter_parametres_trajectoire(csv_path)
-    except Exception as e:
-        print(f"❌ Erreur lors de l'enrichissement des données : {e}")
-        return
+    # Tri par temps
+    df = df.sort_values(by='time')
 
-    for t, d in zip(seuils_temps, seuils_distance):
-        for n in n_clusters:
+    # Création du graphique
+    plt.figure(figsize=(14, 7))
 
-            try:
-                # 1. Calculer la matrice spatio-temporelle
-                matrice_df = comparer_objets(df, seuil_temps=t, seuil_distance=d, debug=debug)
+    # Une couleur par objet
+    color_map = plt.cm.get_cmap('tab20', df['object'].nunique())
+    object_colors = {obj: color_map(i) for i, obj in enumerate(df['object'].unique())}
 
-                if not isinstance(matrice_df, pd.DataFrame):
-                    raise ValueError(f"La matrice n'est pas un DataFrame : {type(matrice_df)}")
+    # Tracer les segments
+    for obj, obj_group in df.groupby('object'):
+        obj_group = obj_group.sort_values(by='time')
 
-                # 2. Clustering des objets
-                features = cluster_objects(df, n_clusters=n, debug=debug)
+        # Identifier les changements de oldobject
+        obj_group['segment'] = (obj_group['oldobject'] != obj_group['oldobject'].shift()).cumsum()
 
-                if not isinstance(features, pd.DataFrame):
-                    raise ValueError(f"Le résultat du clustering n'est pas un DataFrame : {type(features)}")
+        for _, segment in obj_group.groupby('segment'):
+            if len(segment) > 1:
+                plt.plot(
+                    segment['time'], segment['object'],
+                    color=object_colors[obj],
+                    linewidth=0.5
+                )
+                # Ajouter un point/crochet à la fin
+                plt.plot(
+                    segment['time'].iloc[-1], segment['object'].iloc[-1],
+                    marker='o', markersize=4,
+                    color=object_colors[obj]
+                )
 
-                # 3. Créer les connexions
-                objets_connectes = []
-                for obj1 in matrice_df.index:
-                    for obj2 in matrice_df.columns:
-                        if matrice_df.loc[obj1, obj2] == 1:
-                            if obj1 in features.index and obj2 in features.index:
-                                if features.loc[obj1, 'cluster'] == features.loc[obj2, 'cluster']:
-                                    objets_connectes.append((obj1, obj2, int(features.loc[obj1, 'cluster'])))
+    plt.xlabel('Time')
+    plt.ylabel('Object')
+    plt.title('Reconstitution avec fin de segments marquée')
+    plt.grid(True)
+    plt.tight_layout()
 
-                # 4. Calcul du rapport
-                objets_source = [x[0] for x in objets_connectes]
-                objets_cible = [x[1] for x in objets_connectes]
-
-                nb_repetitions_source = sum([objets_source.count(obj) > 1 for obj in objets_source])
-                nb_repetitions_cible = sum([objets_cible.count(obj) > 1 for obj in objets_cible])
-                nb_liens = len(objets_connectes)
-
-                rapport = (nb_liens - (nb_repetitions_source + nb_repetitions_cible)) / nb_liens if nb_liens > 0 else 0
-
-                resultats.append({
-                    'seuil_temps': t,
-                    'seuil_distance': d,
-                    'n_clusters': n,
-                    'nb_liens': nb_liens,
-                    'repetitions_source': nb_repetitions_source,
-                    'repetitions_cible': nb_repetitions_cible,
-                    'rapport': rapport,
-                    'score_final': rapport * np.log1p(nb_liens)  # log1p = log(1 + x) pour éviter log(0)
-                })
+    # Sauvegarde et affichage
+    plt.savefig(output_file, dpi=300)
+    print(f"Graphique sauvegardé sous : {os.path.abspath(output_file)}")
 
 
-            except Exception as e:
-                print(f"❌ Erreur pour t={t}, d={d}, n={n}: {e}")
-                continue
 
-    # Afficher les résultats
-    if resultats:
-        resultats_df = pd.DataFrame(resultats)
-        resultats_df = resultats_df.sort_values(
-            by=['score_final', 'seuil_temps', 'n_clusters'],
-            ascending=[False, True, False]  # Max score, min temps, min cluster
-        )
+def plot_transition_histograms(csv_file, time_output="histogram_time.png", distance_output="histogram_distance.png"):
+    """
+    Calcule les temps et les distances entre les transitions de oldobject pour un même object,
+    puis trace deux histogrammes : un pour les temps, un pour les distances.
+
+    :param csv_file: Chemin vers le fichier CSV
+    :param time_output: Nom du fichier pour l'histogramme des temps
+    :param distance_output: Nom du fichier pour l'histogramme des distances
+    """
+    df = pd.read_csv(csv_file, sep=";")
+
+    # Vérification des colonnes nécessaires
+    required_cols = {'time', 'object', 'oldobject', 'XSplined', 'YSplined', 'ZSplined'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"Le fichier CSV doit contenir les colonnes {required_cols}.")
+
+    # Conversion temps si nécessaire
+    if not pd.api.types.is_numeric_dtype(df['time']):
+        df['time'] = pd.to_datetime(df['time'])
+
+    df = df.sort_values(by=['object', 'time'])
+
+    transition_durations = []
+    transition_distances = []
+
+    # Traitement par object
+    for obj, obj_group in df.groupby('object'):
+        obj_group = obj_group.copy()
+        obj_group['segment'] = (obj_group['oldobject'] != obj_group['oldobject'].shift()).cumsum()
+
+        segments = list(obj_group.groupby('segment'))
+
+        for i in range(len(segments) - 1):
+            current_seg = segments[i][1]
+            next_seg = segments[i + 1][1]
+
+            end_time = current_seg['time'].iloc[-1]
+            start_time = next_seg['time'].iloc[0]
+
+            # Temps écoulé
+            delta = (start_time - end_time).total_seconds() if hasattr(end_time, 'total_seconds') else start_time - end_time
+            if delta >= 0:
+                transition_durations.append(delta)
+
+                # Distance entre fin du segment et début du suivant
+                x1, y1, z1 = current_seg[['XSplined', 'YSplined', 'ZSplined']].iloc[-1]
+                x2, y2, z2 = next_seg[['XSplined', 'YSplined', 'ZSplined']].iloc[0]
+                dist = np.sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
+                transition_distances.append(dist)
+
+    # Histogramme des temps
+    plt.figure(figsize=(10, 4))
+    plt.hist(transition_durations, bins=30, color='steelblue', edgecolor='black')
+    plt.xlabel('Temps écoulé (secondes)')
+    plt.ylabel('Nombre de transitions')
+    plt.title('Histogramme des temps entre transitions de oldobject')
+    plt.tight_layout()
+    plt.savefig(time_output, dpi=300)
+    print(f"Histogramme des temps sauvegardé sous : {os.path.abspath(time_output)}")
 
 
-        # Rappel des meilleurs paramètres
-        meilleur = resultats_df.iloc[0]
-        print("\n✅ Meilleurs paramètres sélectionnés par l'auto-analyse :")
-        print(f"   • Seuil temporel     : {meilleur['seuil_temps']}")
-        print(f"   • Seuil spatial      : {meilleur['seuil_distance']}")
-        print(f"   • Nombre de clusters : {int(meilleur['n_clusters'])}")
-        print(f"   • Liens valides      : {meilleur['nb_liens']}")
-        print(f"   • Répétitions source : {meilleur['repetitions_source']}")
-        print(f"   • Répétitions cible  : {meilleur['repetitions_cible']}")
-        print(f"   • Rapport final      : {round(meilleur['rapport'], 3)}")
-        print(f"   • Score final        : {round(meilleur['score_final'], 3)}")
+    # Histogramme des distances
+    plt.figure(figsize=(10, 4))
+    plt.hist(transition_distances, bins=30, color='darkorange', edgecolor='black')
+    plt.xlabel('Distance 3D entre fin et début de oldobject')
+    plt.ylabel('Nombre de transitions')
+    plt.title('Histogramme des distances entre segments')
+    plt.tight_layout()
+    plt.savefig(distance_output, dpi=300)
+    print(f"Histogramme des distances sauvegardé sous : {os.path.abspath(distance_output)}")
 
-        # Recalcul final
-        matrice_resultat = comparer_objets(df, seuil_temps=meilleur['seuil_temps'], seuil_distance=meilleur['seuil_distance'], debug=debug)
-        if debug:
-            matrice_resultat.to_csv("matrice_spatiotemporelle.csv")
-            print("✅ Matrice spatio-temporelle sauvegardée.")
+def plot_mirrored_duration_histogram(csv_file, output_file="mirrored_duration_histogram.png"):
+    """
+    Crée un histogramme en miroir comparant les durées totales de 'object' et 'oldobject'.
 
-        features_final = cluster_objects(df, n_clusters=int(meilleur['n_clusters']), debug=debug)
+    :param csv_file: Chemin vers le fichier CSV
+    :param output_file: Nom du fichier image de sortie
+    """
+    df = pd.read_csv(csv_file, sep=";")
 
-        objets_connectes = []
-        for obj1 in matrice_resultat.index:
-            for obj2 in matrice_resultat.columns:
-                if matrice_resultat.loc[obj1, obj2] == 1:
-                    if obj1 in features_final.index and obj2 in features_final.index:
-                        if features_final.loc[obj1, 'cluster'] == features_final.loc[obj2, 'cluster']:
-                            objets_connectes.append((obj1, obj2, int(features_final.loc[obj1, 'cluster'])))
+    # Vérification des colonnes nécessaires
+    required_cols = {'time', 'object', 'oldobject'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"Le fichier CSV doit contenir les colonnes {required_cols}.")
 
-        pd.DataFrame(objets_connectes, columns=["objet_source", "objet_cible", "cluster"]).to_csv("connexions_valides.csv", index=False)
-        print("✅ Connexions valides sauvegardées.")
+    # Supposé: df['time'] contient déjà des secondes (float ou int)
+    df = df.sort_values(by='time')
 
-    else:
-        print("⚠️ Aucun résultat d'auto-analyse valide.")
+    # Durée totale pour chaque groupement
+    object_durations = df.groupby('object')['time'].agg(lambda x: x.max() - x.min())
+    oldobject_durations = df.groupby('oldobject')['time'].agg(lambda x: x.max() - x.min())
 
+    # Bins partagés
+    all_durations = pd.concat([object_durations, oldobject_durations])
+    bins = np.histogram_bin_edges(all_durations, bins=30)
 
-    return pd.DataFrame(objets_connectes, columns=["objet_source", "objet_cible", "cluster"])
+    # Histogrammes
+    object_counts, _ = np.histogram(object_durations, bins=bins)
+    oldobject_counts, _ = np.histogram(oldobject_durations, bins=bins)
 
+    bin_centers = 0.5 * (bins[1:] + bins[:-1])
+    width = np.diff(bins)
+
+    # Tracé
+    plt.figure(figsize=(12, 6))
+    plt.bar(bin_centers, object_counts, width=width, color='mediumseagreen', label='Object', edgecolor='black')
+    plt.bar(bin_centers, -oldobject_counts, width=width, color='mediumpurple', label='Oldobject', edgecolor='black')
+
+    plt.axhline(0, color='black', linewidth=1)
+    plt.xlabel('Durée totale (secondes)')
+    plt.ylabel('Nombre d\'éléments')
+    plt.title('Histogramme miroir des durées totales : Object (haut) vs Oldobject (bas)')
+    plt.legend(loc='upper right')
+    plt.tight_layout()
+    plt.savefig(output_file, dpi=300)
+    print(f"Histogramme miroir sauvegardé sous : {os.path.abspath(output_file)}")
 
 
 # -----------------------------------------------------------------------------
@@ -559,4 +617,4 @@ def save_reconstituted_file(input_file, connexions_df, df, seuil_duree):
 
     # Sauvegarder le fichier modifié
     df_modifie.to_csv(output_file, sep=';', index=False)
-    print(f"✅ Le fichier des trajectoires a été mis à jour et sauvegardé sous : {output_file}")
+    print(f"Le fichier des trajectoires a été mis à jour et sauvegardé sous : {output_file}")
