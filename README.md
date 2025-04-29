@@ -1,92 +1,112 @@
-# 🦟 PMosquito – Reconstitution des trajectoires de moustiques
+# 🦟 PMosquito – Reconstructing Mosquito Trajectories
 
-Ce projet permet d'analyser, regrouper et reconstituer des trajectoires de moustiques à partir de données spatio-temporelles. 
-Il propose une analyse manuelle ou automatique basée sur des paramètres de clustering et de proximité.
+This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data.
+It supports both manual and automatic analysis based on clustering and proximity parameters.
 
 ---
 
-## 🚀 Installation
+## Exigence 
+
+Pour utilisez ce code, vous devez vous munir d'un fichier csv au format suivant :
+
+| object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSpline 	|
+|---------------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
+| *int*  	| *float*   	| *float* 	| *float* 	| *float*  	| *float* 	| *float* 	| *float* 	|
+| Identifiant  	| time (s)  	| x position	| y position 	| z position	| x velocity 	| y velocity	| z velocity 	|
+
+Example (excerpt):
+
+| object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSpline 	|
+|---------------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
+| 1	 	| 3.151  	| 0.192		| -0.152	|-0.111		| 0.465 	| -0.050	| 0.403		|
+| 1 	 	| 3.171		| 0.201		| -0153		| -0.103	| 0.470		|-0.044		| 0.396	 	|
 
 
-Après avoir récupérer le dossier PMosquito en le clonant à partir de la commande suivante : 
+🚀 Installation
 
-Il est conseillé de se mettre dans un environnement virtuel :   
+First, clone the PMosquito folder using:
+
+	git clone <repository_url>
+
+It is recommended to use a virtual environment:
 ```
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
+source venv/bin/activate  # For Linux/macOS
+
 ```
 
 ```
-venv\Scripts\activate     # Windows
+venv\Scripts\activate     # For Windows
+
 ```
 
-Pour faire focntionner l'outil vous aurez besoin d'installer des dépendances
+Then, install the required dependencies:
 
 	pip install -r requirements.txt
 
-Assurez-vous que pandas, numpy, scikit-learn, matplotlib et seaborn sont bien installés.
+Make sure the following packages are installed: pandas, numpy, scikit-learn, matplotlib, seaborn.
 
-## 📂 Structure
+📂 Project Structure
 
-Ce dossier est structuré de la façon suivante :
-
+The folder is organized as follows:
 ```
 📁 PMosquito/
-├── main.py                    # Script principal
-├── utils.py                   # Fonctions utilitaires (clustering, calculs, visualisations)
-├── requirements.txt           # Dépendances Python
-└── jeu_test.csv               # Exemple de jeu de données (à fournir)
+├── main.py                    # Main script
+├── utils.py                   # Utility functions (clustering, calculations, visualizations)
+├── requirements.txt           # Python dependencies
+└── jeu_test.csv               # Example dataset (to be provided)
 ```
 
-## 📈 Choix du mode de lancement
 
-Il existe deux méthodes de lancement du script : le mode manuel et le mode auto-analyse. Chacunes de ses méthodes présentent ses avantages
-et ses inconvénients. Il est donc nécessaire de choisir la méthode la plus adaptée à votre projet. 
+📦 Output Files
 
-### Mode manuel 
-Dans le mode manuel vous avez la possibilité de définir de nombreux paramètres permettant de rendre plus ou moins stricte la reconstitution des trajectoires. 
-Ce mode est plus rapide que le mode auto-anlyse mais demande à ce que vous sachiez quel valeur attribué à chaques paramètres selon votre projet.
+The program generates:
 
-## Mode auto-analyse 
-Dans le mode auto-analyse, le programme test différentes valeurs de paramètres et sélectionne la meilleure combinaison pour reconstruire un maximum de trajectoires en gardant 
-une fiabilité importante. Ce mode necessite plus de temps de calcul.  
- 
+    your_filename_with_features.csv: Enriched data including:
+	- 'Speed' : overall speed
+        - 'AXSplined', 'AYSplined', 'AZSplined' : acceleration components at time t in x, y, and z
+	- 'Acceleration': overall acceleration
+        - 'TangentialAcceleration' : tangential acceleration
+	- 'Curvature': curvature of the trajectory
+	- 'DistanceTravelled' : distance traveled between two points
 
+    your_filename_reconstitute.csv: Data with updated trajectory identifiers (when a trajectory is considered a continuation of another)
 
-### 📦 Sorties générées
+⚙️ Available Parameters
 
-    votre_nom_de_fichier_avec_features.csv : Données enrichies par les calculs suivants :
-	- 'Speed' : calulcul de la vitesse générale
-        - 'AXSplined', 'AYSplined', 'AZSplined' : calcul des accelerations à l'instant t au positions x,y et z respectivement 
-	- 'Acceleration': calucul de l'accélération générale
-        - 'TangentialAcceleration' : calcul de l'acceleration tangentielle
-	- 'Curvature': calcul de la courbure de la trajectoire
-	- 'DistanceTravelled' : calcul de la distance effectuée entre deux points
+You can customize trajectory reconstruction using the following parameters:
 
-    votre_nom_de_fichier_reconstitute : Données avec un changement d'identifiant pour les trajectoires etant la suite d'une autre 
+| Argument                  | Description                                          | Valeurs par defaut      |
+|---------------------------|------------------------------------------------------|-------------------------|
+| `csv_path` *(positional)* | Path to the CSV file                          	   | Required		     | 
+| `--seuil_temps`           | Temporal threshold to connect two objects            |Optional *(0.5)*         | 
+| `--seuil_distance`        | Spatial proximity threshold                          | Optional *(0.3)*        |
+| `--n_clusters`            |Number of clusters to use                      	   | Optional *(10)*         | 
+| `--debug`                 |	Displays additional info and intermediate results  | Optional *(False)*      |
+| `--poids-temps`           | Weight of the temporal component                 	   | Optional *(1.0)*        | 
+| `--poids-distance`        | Weight of the spatial component                      | Optional *(1.0)*        | 
+| `--poids-ressemblance`    |Intra-cluster similarity weight                       | Optional *(1.0)*        | 
+| `--bonus-cible-source`    | 	Bonus if the target is also a source               | Optional *(0.3)*        |
+| `--time-min-reconstitute` | Minimum duration to keep a trajectory                | Optional *(0.0)*        | 
 
-### ⚙️ Paramètres disponibles
+▶️ Run Example
 
-Quelque soit le mode de lancement que vous effectuez vous pouvez ou devez définir les paramètres suivants : 
+Here's an example command to run the program:
 
-| Argument                  | Description                                          | Mode Manuel            | Mode Automatique             |
-|---------------------------|------------------------------------------------------|-------------------------|-----------------------------|
-| `csv_path` *(positional)* | Chemin vers le fichier CSV                           | Nécessaire              | Nécessaire                  |
-| `--seuil_temps`           | Seuil temporel pour connecter deux objets            | Nécessaire              | Géré automatiquement        |
-| `--seuil_distance`        | Seuil spatial de proximité                           | Nécessaire              | Géré automatiquement        |
-| `--n_clusters`            | Nombre de clusters à utiliser                        | Nécessaire              | Géré automatiquement        |
-| `--auto-analyse`          | Active le mode auto-analyse                          | Optionnel *(False)*     | Nécessaire *(True)*         |
-| `--debug`                 | Affiche plus d’infos et résultats intermédiaires     | Optionnel *(False)*     | Optionnel *(False)*         |
-| `--poids-temps`           | Poids de la composante temporelle                    | Optionnel *(1.0)*       | Optionnel *(1.0)*           |
-| `--poids-distance`        | Poids de la composante spatiale                      | Optionnel *(1.0)*       | Optionnel *(1.0)*           |
-| `--poids-ressemblance`    | Poids intra-cluster                                  | Optionnel *(1.0)*       | Optionnel *(1.0)*           |
-| `--bonus-cible-source`    | Bonus si la cible est également une source           | Optionnel *(0.5)*       | Optionnel *(0.5)*           |
-| `--time-min-reconstitute` | Durée minimale pour garder une trajectoire           | Optionnel *(0.0)*       | Optionnel *(0.0)*           |
+	C:\Your_path_to\PMosquito\ > python main.py path_to_your_file.csv --seuil_temps 0.4 --seuil_distance 0.2 --debug --time-min-reconstitute 10.0
 
 
+In this example:
 
+- Connected mosquitoes must be no more than 0.2m apart and within 0.4s of each other.
+
+- The debug flag enables detailed logging and intermediate results.
+
+- Trajectories shorter than 10 seconds are excluded from the final CSV output.
 
 📬 Contact
 
-Pour toute question ou suggestion : olivier.roux@ird.fr
-Projet développé dans le cadre d'un stage de M2 sur l’analyse comportementale des moustiques.
+For questions or suggestions, please contact:
+olivier.roux@ird.fr
+
+Project developed as part of a Master's thesis on mosquito behavior analysis.
