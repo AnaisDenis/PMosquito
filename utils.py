@@ -76,10 +76,10 @@ def ajouter_parametres_trajectoire(csv_path):
     # Appliquer à chaque objet
     df = df.groupby('object', group_keys=False).apply(compute_features)
 
-    # Sauvegarde
-    new_csv_path = csv_path.replace(".csv", "_avec_features.csv")
-    df.to_csv(new_csv_path, sep=";", index=False)
-    print(f"Fichier enrichi sauvegardé : {new_csv_path}")
+    # Sauvegarde (decocher si besoin de voir)
+    #new_csv_path = csv_path.replace(".csv", "_avec_features.csv")
+    #df.to_csv(new_csv_path, sep=";", index=False)
+    #print(f"Fichier enrichi sauvegardé : {new_csv_path}")
 
     return df
 
