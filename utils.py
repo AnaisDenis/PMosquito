@@ -5,6 +5,7 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import matplotlib.colors as mcolors
 
 #################################################################################
 #                        FONCTIONS DE RECONSTRUCTION DE TRAJECTOIRES
@@ -236,7 +237,7 @@ def plot_heatmap(matrice_df, title="Matrice de connexions"):
 
 def plot_reconstitute(csv_file, output_file="reconstitution_graphique.png"):
     """
-    Lit un fichier CSV, trace 'object' en fonction de 'time' et sauvegarde le graphique.
+    Lit un fichier CSV, trace 'object' en fonction de 'time' avec des couleurs aléatoires et des segments fins.
 
     :param csv_file: Chemin vers le fichier CSV
     :param output_file: Nom du fichier de sortie pour sauvegarder le graphique (PNG par défaut)
@@ -259,9 +260,11 @@ def plot_reconstitute(csv_file, output_file="reconstitution_graphique.png"):
     # Création du graphique
     plt.figure(figsize=(14, 7))
 
-    # Une couleur par objet
-    color_map = plt.cm.get_cmap('tab20', df['object'].nunique())
-    object_colors = {obj: color_map(i) for i, obj in enumerate(df['object'].unique())}
+    # Génération de couleurs aléatoires
+    unique_objects = df['object'].unique()
+    rng = np.random.default_rng(seed=42)  # pour reproductibilité
+    random_colors = rng.choice(list(mcolors.CSS4_COLORS.values()), size=len(unique_objects), replace=True)
+    object_colors = dict(zip(unique_objects, random_colors))
 
     # Tracer les segments
     for obj, obj_group in df.groupby('object'):
@@ -275,25 +278,24 @@ def plot_reconstitute(csv_file, output_file="reconstitution_graphique.png"):
                 plt.plot(
                     segment['time'], segment['object'],
                     color=object_colors[obj],
-                    linewidth=0.5
+                    linewidth=0.3
                 )
-                # Ajouter un point/crochet à la fin
+                # Marquer la fin du segment
                 plt.plot(
                     segment['time'].iloc[-1], segment['object'].iloc[-1],
-                    marker='o', markersize=4,
+                    marker='o', markersize=2,
                     color=object_colors[obj]
                 )
 
     plt.xlabel('Time')
     plt.ylabel('Object')
-    plt.title('Reconstitution avec fin de segments marquée')
+    plt.title('Reconstitution des trajectoires')
     plt.grid(True)
     plt.tight_layout()
 
     # Sauvegarde et affichage
     plt.savefig(output_file, dpi=300)
     print(f"Graphique sauvegardé sous : {os.path.abspath(output_file)}")
-
 
 
 def plot_transition_histograms(csv_file, time_output="histogram_time.png", distance_output="histogram_distance.png"):
@@ -362,14 +364,16 @@ def plot_transition_histograms(csv_file, time_output="histogram_time.png", dista
     plt.hist(transition_distances, bins=30, color='darkorange', edgecolor='black')
     plt.xlabel('Distance 3D entre fin et début de oldobject')
     plt.ylabel('Nombre de transitions')
-    plt.title('Histogramme des distances entre segments')
+    plt.title('Histogramme des distances entre fragments de trajectoire')
     plt.tight_layout()
     plt.savefig(distance_output, dpi=300)
     print(f"Histogramme des distances sauvegardé sous : {os.path.abspath(distance_output)}")
 
+
 def plot_mirrored_duration_histogram(csv_file, output_file="mirrored_duration_histogram.png"):
     """
-    Crée un histogramme en miroir comparant les durées totales de 'object' et 'oldobject'.
+    Crée un histogramme en miroir comparant les durées totales de 'object' et 'oldobject',
+    normalisé pour permettre la comparaison même si le nombre d'objets diffère.
 
     :param csv_file: Chemin vers le fichier CSV
     :param output_file: Nom du fichier image de sortie
@@ -381,21 +385,24 @@ def plot_mirrored_duration_histogram(csv_file, output_file="mirrored_duration_hi
     if not required_cols.issubset(df.columns):
         raise ValueError(f"Le fichier CSV doit contenir les colonnes {required_cols}.")
 
-    # Supposé: df['time'] contient déjà des secondes (float ou int)
     df = df.sort_values(by='time')
 
-    # Durée totale pour chaque groupement
+    # Durée totale pour chaque objet / oldobject
     object_durations = df.groupby('object')['time'].agg(lambda x: x.max() - x.min())
     oldobject_durations = df.groupby('oldobject')['time'].agg(lambda x: x.max() - x.min())
 
-    # Bins partagés
+    # Bins communs
     all_durations = pd.concat([object_durations, oldobject_durations])
     bins = np.histogram_bin_edges(all_durations, bins=30)
 
-    # Histogrammes
+    # Histogrammes normalisés
     object_counts, _ = np.histogram(object_durations, bins=bins)
     oldobject_counts, _ = np.histogram(oldobject_durations, bins=bins)
 
+    object_counts = object_counts / object_counts.sum()  # Normalisation
+    oldobject_counts = oldobject_counts / oldobject_counts.sum()  # Normalisation
+
+    # Centres et largeur des barres
     bin_centers = 0.5 * (bins[1:] + bins[:-1])
     width = np.diff(bins)
 
@@ -406,12 +413,12 @@ def plot_mirrored_duration_histogram(csv_file, output_file="mirrored_duration_hi
 
     plt.axhline(0, color='black', linewidth=1)
     plt.xlabel('Durée totale (secondes)')
-    plt.ylabel('Nombre d\'éléments')
-    plt.title('Histogramme miroir des durées totales : Object (haut) vs Oldobject (bas)')
+    plt.ylabel('Proportion normalisée')
+    plt.title('Histogramme miroir des durées totales (normalisé) : Object (haut) vs Oldobject (bas)')
     plt.legend(loc='upper right')
     plt.tight_layout()
     plt.savefig(output_file, dpi=300)
-    print(f"Histogramme miroir sauvegardé sous : {os.path.abspath(output_file)}")
+    print(f"✅ Histogramme miroir sauvegardé sous : {os.path.abspath(output_file)}")
 
 
 # -----------------------------------------------------------------------------
