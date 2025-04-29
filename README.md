@@ -1,4 +1,4 @@
-# 🦟 PMosquito – Reconstructing Mosquito Trajectories
+# PMosquito – Reconstructing Mosquito Trajectories
 
 This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data.
 It supports both manual and automatic analysis based on clustering and proximity parameters.
@@ -7,7 +7,7 @@ It supports both manual and automatic analysis based on clustering and proximity
 
 ## Exigence 
 
-Pour utilisez ce code, vous devez vous munir d'un fichier csv au format suivant :
+To use this code, you need a CSV file in the following format:
 
 | object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSpline 	|
 |---------------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
@@ -22,7 +22,7 @@ Example (excerpt):
 | 1 	 	| 3.171		| 0.201		| -0153		| -0.103	| 0.470		|-0.044		| 0.396	 	|
 
 
-🚀 Installation
+ Installation
 
 First, clone the PMosquito folder using:
 
@@ -46,11 +46,11 @@ Then, install the required dependencies:
 
 Make sure the following packages are installed: pandas, numpy, scikit-learn, matplotlib, seaborn.
 
-📂 Project Structure
+ Project Structure
 
 The folder is organized as follows:
 ```
-📁 PMosquito/
+ PMosquito/
 ├── main.py                    # Main script
 ├── utils.py                   # Utility functions (clustering, calculations, visualizations)
 ├── requirements.txt           # Python dependencies
@@ -58,7 +58,7 @@ The folder is organized as follows:
 ```
 
 
-📦 Output Files
+ Output Files
 
 The program generates:
 
@@ -72,24 +72,25 @@ The program generates:
 
     your_filename_reconstitute.csv: Data with updated trajectory identifiers (when a trajectory is considered a continuation of another)
 
-⚙️ Available Parameters
+ Available Parameters
 
 You can customize trajectory reconstruction using the following parameters:
 
-| Argument                  | Description                                          | Valeurs par defaut      |
-|---------------------------|------------------------------------------------------|-------------------------|
-| `csv_path` *(positional)* | Path to the CSV file                          	   | Required		     | 
-| `--seuil_temps`           | Temporal threshold to connect two objects            |Optional *(0.5)*         | 
-| `--seuil_distance`        | Spatial proximity threshold                          | Optional *(0.3)*        |
-| `--n_clusters`            |Number of clusters to use                      	   | Optional *(10)*         | 
-| `--debug`                 |	Displays additional info and intermediate results  | Optional *(False)*      |
-| `--poids-temps`           | Weight of the temporal component                 	   | Optional *(1.0)*        | 
-| `--poids-distance`        | Weight of the spatial component                      | Optional *(1.0)*        | 
-| `--poids-ressemblance`    |Intra-cluster similarity weight                       | Optional *(1.0)*        | 
-| `--bonus-cible-source`    | 	Bonus if the target is also a source               | Optional *(0.3)*        |
-| `--time-min-reconstitute` | Minimum duration to keep a trajectory                | Optional *(0.0)*        | 
+| Argument                  | Description                                          	| Valeurs par defaut      |
+|---------------------------|-----------------------------------------------------------|-------------------------|
+| `csv_path` *(positional)* | Path to the CSV file                          	   	| Required		  | 
+| `--seuil_temps`           | Temporal threshold to connect two objects            	|Optional *(0.5)*         | 
+| `--seuil_distance`        | Spatial proximity threshold                          	| Optional *(0.3)*        |
+| `--n_clusters`            | Number of clusters to use                      	   	| Optional *(10)*         | 
+| `--debug`                 | Displays additional info and intermediate results    	| Optional *(False)*      |
+| `--poids-temps`           | Weight of the temporal component                 	   	| Optional *(1.0)*        | 
+| `--poids-distance`        | Weight of the spatial component                      	| Optional *(1.0)*        | 
+| `--poids-ressemblance`    | Intra-cluster similarity weight                      	| Optional *(1.0)*        | 
+| `--bonus-cible-source`    | Bonus if the target is also a source                 	| Optional *(0.3)*        |
+| `--time-min-reconstitute` | Minimum duration to keep a trajectory                	| Optional *(0.0)*        | 
+| `--graphiques	`	    | Save some statistical graphics about the reconstitution  	| Optional *(0.0)*        |
 
-▶️ Run Example
+ Run Example
 
 Here's an example command to run the program:
 
@@ -104,7 +105,7 @@ In this example:
 
 - Trajectories shorter than 10 seconds are excluded from the final CSV output.
 
-📬 Contact
+ Contact
 
 For questions or suggestions, please contact:
 olivier.roux@ird.fr
