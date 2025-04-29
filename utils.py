@@ -611,6 +611,14 @@ def save_reconstituted_file(input_file, connexions_df, df, seuil_duree):
     # Appliquer la mise à jour des cibles dans les trajectoires
     df_modifie = update_target_with_source(connexions_df, df, seuil_duree)
 
+    # Ne conserver que les colonnes souhaitées
+    colonnes_a_conserver = [
+        'object', 'oldobject', 'time',
+        'XSplined', 'YSplined', 'ZSplined',
+        'VXSplined', 'VYSplined', 'VZSplined'
+    ]
+    df_modifie = df_modifie[colonnes_a_conserver]
+
     # Générer le nom du fichier de sortie avec le suffixe '_reconstitue'
     base_name, ext = os.path.splitext(input_file)
     output_file = f"{base_name}_reconstitue{ext}"
@@ -618,3 +626,4 @@ def save_reconstituted_file(input_file, connexions_df, df, seuil_duree):
     # Sauvegarder le fichier modifié
     df_modifie.to_csv(output_file, sep=';', index=False)
     print(f"Le fichier des trajectoires a été mis à jour et sauvegardé sous : {output_file}")
+
