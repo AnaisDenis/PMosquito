@@ -31,20 +31,6 @@ First, clone the PMosquito folder using:
  **Installing Python**  
 For beginners, follow our [Python installation guide](./INSTALLATION.md) to set up Python and your environment.
 
-
-
-It is recommended to use a virtual environment:
-```
-python -m venv venv
-source venv/bin/activate  # For Linux/macOS
-
-```
-
-```
-venv\Scripts\activate     # For Windows
-
-```
-
 Then, install the required dependencies:
 
 	pip install -r requirements.txt
