@@ -46,7 +46,7 @@ Then, install the required dependencies:
 
 Make sure the following packages are installed: pandas, numpy, scikit-learn, matplotlib, seaborn.
 
- Project Structure
+## Project Structure
 
 The folder is organized as follows:
 ```
@@ -82,7 +82,7 @@ The folder is organized as follows:
 ```
 
 
- Output Files
+## Output Files
 
 The program generates:
 
@@ -101,7 +101,7 @@ With option graphiques :
 	mirrored_duration_histogram.png # comparison of durations after reconstitution
 	reconstitition_graphique.png #  visual of the durations of the trajectories and their reconstructions
 
- Available Parameters
+## Available Parameters
 
 You can customize trajectory reconstruction using the following parameters:
 
@@ -119,7 +119,7 @@ You can customize trajectory reconstruction using the following parameters:
 | `--time-min-reconstitute` | Minimum duration to keep a trajectory                	| Optional *(0.0)*        | 
 | `--graphiques	`	    | Save some statistical graphics about the reconstitution  	| Optional *(0.0)*        |
 
- Run Example
+## Run Example
 
 Here's an example command to run the program:
 
@@ -138,7 +138,7 @@ In this example:
 
 - Trajectories shorter than 10 seconds are excluded from the final CSV output.
 
- Contact
+## Contact
 
 For questions or suggestions, please contact:
 olivier.roux@ird.fr
