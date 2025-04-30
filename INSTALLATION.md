@@ -73,3 +73,17 @@ On Windows, reinstall Python and ensure "Install pip" is checked
 On Linux, use:
 
 	sudo apt install python3-pip
+
+## Virtual Environment
+
+It is recommended to use a virtual environment:
+```
+python -m venv venv
+source venv/bin/activate  # For Linux/macOS
+
+```
+
+```
+venv\Scripts\activate     # For Windows
+
+```
