@@ -49,8 +49,24 @@ Open a terminal and enter the following line if you have git (you can verify tha
 
  Option 2 : 
  On the GitHub page, you have a green "code" button. By clicking on it, you have downloadzip which allows you to retrieve all the files
+
+ The downloaded file is located in your downloads directory. You can move it and extract this folder wherever you want to store it.
  
-Pmosquito works with some packages, you need to install them for this program to work
+### Install some packages
+Pmosquito works with some packages, you need to install them for this program to work.
+In your terminal you need to move to the Pmosquito-main directory
+You must write in your terminal: 
+	
+	cd path_name
+
+**Note**: To find your path:
+Open File Explorer.
+Go to your project folder.
+Click in the address bar at the top: the path will appear.
+
+**Be careful** if your path contains spaces, use the terminal: windows + r
+
+Then you just need to copy and paste the following line into your terminal to install the packages: 
 
 	pip install -r requirements.txt
 
