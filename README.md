@@ -51,10 +51,34 @@ Make sure the following packages are installed: pandas, numpy, scikit-learn, mat
 The folder is organized as follows:
 ```
  PMosquito/
-├── main.py                    # Main script
-├── utils.py                   # Utility functions (clustering, calculations, visualizations)
-├── requirements.txt           # Python dependencies
-└── jeu_test.csv               # Example dataset (to be provided)
+├── main.py                    		# Main script
+├── utils.py                  		# Utility functions (clustering, calculations, visualizations)
+├── requirements.txt           		# Python dependencies
+└── Tests
+	├── jeu_test_coupe_0.2.csv	# interruption at the same time
+	├── jeu_test_extrait_données_réelles.csv #extracted from trajectory data from laboratory swarms
+	├── jeu_test_semi_fictif.csv	#trajectory set from laboratory swarm data
+	├── jeu_test_trajectoires_fictifs.csv #set of trajectories from mathematical functions aimed at reproducing a swarm
+	├── résultat_semi_fictif
+		├── jeu_test_semi_fictif_reconstitue.csv # result
+		└── visualisation.png # swarm swarm visualization 
+	├── résultat_trajectoires_fictifs
+		├── jeu_test_moustiques_reconstitue.csv # result
+		└── visualisation.png # swarm swarm visualization
+	└── résultat_extrait_données_réeles
+		├── debug # file containing additional information using the debug function
+			├── connexions_spatiotemporelles.csv 
+			├── connexions_valides.csv # fragments of trajectories that come together
+			├── matrice_spatiotemporelle.csv # result
+			└── PostProc_Filtered_2022_06_23_18_48_35_Splined_avec_features # add features  
+		├── graphiques # file containing additional information using the debug function
+			├── histogram_distance.png # distance during the gap
+			├── histogram_time.png # gap time 
+			├── mirrored_duration_histogram.png # comparison of durations after reconstitution
+			└── reconstitition_graphique.png #  visual of the durations of the trajectories and their reconstructions
+		└── PostProc_Filtered_2022_06_23_18_48_35_Splined_reconstitue # result of jeu_test_extrait_données_réelles
+		
+
 ```
 
 
@@ -93,6 +117,10 @@ You can customize trajectory reconstruction using the following parameters:
  Run Example
 
 Here's an example command to run the program:
+
+	C:\Your_path_to\PMosquito\ > python main.py path_to_your_file.csv
+
+To add options, simply enter: "-- 	name of the option	 desired parameter"
 
 	C:\Your_path_to\PMosquito\ > python main.py path_to_your_file.csv --seuil_temps 0.4 --seuil_distance 0.2 --debug --time-min-reconstitute 10.0
 
