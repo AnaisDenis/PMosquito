@@ -29,7 +29,8 @@ First, clone the PMosquito folder using:
 	git clone <https://github.com/AnaisDenis/PMosquito.git>
 
  **Installing Python**  
-If you don't have Python installed, follow this [beginner-friendly tutorial](https://realpython.com/installing-python/) to install Python and configure your system.
+For beginners, follow our [Python installation guide](./INSTALLATION.md) to set up Python and your environment.
+
 
 
 It is recommended to use a virtual environment:
@@ -64,23 +65,23 @@ The folder is organized as follows:
 	├── jeu_test_semi_fictif.csv	#trajectory set from laboratory swarm data
 	├── jeu_test_trajectoires_fictifs.csv #set of trajectories from mathematical functions aimed at reproducing a swarm
 	├── résultat_semi_fictif
-		├── jeu_test_semi_fictif_reconstitue.csv # result
+		├── jeu_test_semi_fictif_reconstitue.csv 
 		└── visualisation.png # swarm swarm visualization 
 	├── résultat_trajectoires_fictifs
-		├── jeu_test_moustiques_reconstitue.csv # result
+		├── jeu_test_moustiques_reconstitue.csv 
 		└── visualisation.png # swarm swarm visualization
 	└── résultat_extrait_données_réeles
-		├── debug # file containing additional information using the debug function
+		├── debug
 			├── connexions_spatiotemporelles.csv 
-			├── connexions_valides.csv # fragments of trajectories that come together
-			├── matrice_spatiotemporelle.csv # result
-			└── PostProc_Filtered_2022_06_23_18_48_35_Splined_avec_features # add features  
-		├── graphiques # file containing additional information using the debug function
-			├── histogram_distance.png # distance during the gap
-			├── histogram_time.png # gap time 
-			├── mirrored_duration_histogram.png # comparison of durations after reconstitution
-			└── reconstitition_graphique.png #  visual of the durations of the trajectories and their reconstructions
-		└── PostProc_Filtered_2022_06_23_18_48_35_Splined_reconstitue # result of jeu_test_extrait_données_réelles
+			├── connexions_valides.csv 
+			├── matrice_spatiotemporelle.csv 
+			└── PostProc_Filtered_2022_06_23_18_48_35_Splined_avec_features 
+		├── graphiques 
+			├── histogram_distance.png 
+			├── histogram_time.png 
+			├── mirrored_duration_histogram.png
+			└── reconstitition_graphique.png 
+		└── PostProc_Filtered_2022_06_23_18_48_35_Splined_reconstitue 
 		
 
 ```
