@@ -45,16 +45,6 @@ For beginners, follow our [Python installation guide](./INSTALLATION.md) to set 
 [Télécharger PMosquito au format ZIP](https://github.com/AnaisDenis/PMosquito/archive/refs/heads/main.zip)
 
 
-Option 1 : 
-Open a terminal and enter the following line if you have git (you can verify that you have git by writing in your terminal: git --version )
-
-	git clone <https://github.com/AnaisDenis/PMosquito.git>
-
- Option 2 : 
- On the GitHub page, you have a green "code" button. By clicking on it, you have downloadzip which allows you to retrieve all the files
-
- The downloaded file is located in your downloads directory. You can move it and extract this folder wherever you want to store it.
- 
 ### Install some packages
 Pmosquito works with some packages, you need to install them for this program to work.
 In your terminal you need to move to the Pmosquito-main directory
