@@ -85,7 +85,7 @@ The folder is organized as follows:
  Output Files
 
 The program generates:
-    your_filename_reconstitute.csv: Data with updated trajectory identifiers (when a trajectory is considered a continuation of another)
+    	your_filename_reconstitute.csv: Data with updated trajectory identifiers (when a trajectory is considered a continuation of another)
     
 With option debug :
 	connexions_spatiotemporelles.csv 
