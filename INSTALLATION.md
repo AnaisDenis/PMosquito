@@ -26,7 +26,8 @@ or
 If you see something like Python 3.10.x, Python is already installed. Otherwise, proceed to the next step.
 
 ## Install Python
-For Windows
+
+### For Windows
 
 Go to https://www.python.org/downloads/windows/
 
@@ -40,7 +41,7 @@ After installation, reopen your terminal and check:
 
 	python --version
 
-For macOS
+### For macOS
 
 If needed, install Homebrew
 
@@ -49,7 +50,7 @@ Use the following command:
 	brew install python
 
 
-For Linux (Debian, Ubuntu, etc.)
+### For Linux (Debian, Ubuntu, etc.)
 
 Use the following commands:
 
