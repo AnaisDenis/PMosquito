@@ -22,16 +22,34 @@ Example (excerpt):
 | 1 	 	| 3.171		| 0.201		| -0153		| -0.103	| 0.470		|-0.044		| 0.396	 	|
 
 
- Installation
+ Installation of Pmosquito
 
-First, clone the PMosquito folder using:
+**Open a terminal**
+A terminal (or command prompt) is a tool that allows you to interact with your computer by typing text commands. Unlike a graphical interface (where you click buttons), the terminal allows you to execute specific instructions, such as launching a Python script, installing libraries, or navigating through your project folders.
 
-	git clone <https://github.com/AnaisDenis/PMosquito.git>
+**Windows**: Press Windows + R, type cmd, and then press Enter.
+You can also use PowerShell or Visual Studio Code's built-in terminal (View menu > Terminal).
+
+**macOS**: Open the Terminal application via Spotlight (Cmd + Space, then type "Terminal").
+
+**Linux**: Use the shortcut Ctrl + Alt + T or search for "Terminal" in your applications menu.
+
+To install Pmosquito, you need Python 
 
  **Installing Python**  
 For beginners, follow our [Python installation guide](./INSTALLATION.md) to set up Python and your environment.
 
-Then, install the required dependencies:
+To retrieve this file containing the codes and test sets you can:
+
+Option 1 : 
+Open a terminal and enter the following line if you have git (you can verify that you have git by writing in your terminal: git --version )
+
+	git clone <https://github.com/AnaisDenis/PMosquito.git>
+
+ Option 2 : 
+ On the GitHub page, you have a green "code" button. By clicking on it, you have downloadzip which allows you to retrieve all the files
+ 
+Pmosquito works with some packages, you need to install them for this program to work
 
 	pip install -r requirements.txt
 
