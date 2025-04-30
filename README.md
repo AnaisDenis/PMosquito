@@ -42,6 +42,9 @@ For beginners, follow our [Python installation guide](./INSTALLATION.md) to set 
 
 ### Retrieve this file containing the codes and test 
 
+[Télécharger PMosquito au format ZIP](https://github.com/AnaisDenis/PMosquito/archive/refs/heads/main.zip)
+
+
 Option 1 : 
 Open a terminal and enter the following line if you have git (you can verify that you have git by writing in your terminal: git --version )
 
