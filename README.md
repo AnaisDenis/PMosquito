@@ -85,14 +85,17 @@ The folder is organized as follows:
  Output Files
 
 The program generates:
+
     	your_filename_reconstitute.csv: Data with updated trajectory identifiers (when a trajectory is considered a continuation of another)
     
 With option debug :
+
 	connexions_spatiotemporelles.csv 
 	connexions_valides.csv # fragments of trajectories that come together
 	matrice_spatiotemporelle.csv # result
 	your_filename_avec_features # add features  
 With option graphiques :	
+
 	histogram_distance.png # distance during the gap
 	histogram_time.png # gap time 
 	mirrored_duration_histogram.png # comparison of durations after reconstitution
