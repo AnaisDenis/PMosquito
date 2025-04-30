@@ -22,9 +22,9 @@ Example (excerpt):
 | 1 	 	| 3.171		| 0.201		| -0153		| -0.103	| 0.470		|-0.044		| 0.396	 	|
 
 
- Installation of Pmosquito
+## Installation of Pmosquito
 
-**Open a terminal**
+### Open a terminal
 A terminal (or command prompt) is a tool that allows you to interact with your computer by typing text commands. Unlike a graphical interface (where you click buttons), the terminal allows you to execute specific instructions, such as launching a Python script, installing libraries, or navigating through your project folders.
 
 **Windows**: Press Windows + R, type cmd, and then press Enter.
@@ -36,10 +36,11 @@ You can also use PowerShell or Visual Studio Code's built-in terminal (View menu
 
 To install Pmosquito, you need Python 
 
- **Installing Python**  
+### Installing Python 
 For beginners, follow our [Python installation guide](./INSTALLATION.md) to set up Python and your environment.
 
-To retrieve this file containing the codes and test sets you can:
+
+### Retrieve this file containing the codes and test 
 
 Option 1 : 
 Open a terminal and enter the following line if you have git (you can verify that you have git by writing in your terminal: git --version )
