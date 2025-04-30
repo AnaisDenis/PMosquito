@@ -28,6 +28,10 @@ First, clone the PMosquito folder using:
 
 	git clone <https://github.com/AnaisDenis/PMosquito.git>
 
+ **Installing Python**  
+If you don't have Python installed, follow this [beginner-friendly tutorial](https://realpython.com/installing-python/) to install Python and configure your system.
+
+
 It is recommended to use a virtual environment:
 ```
 python -m venv venv
