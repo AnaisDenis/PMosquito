@@ -78,13 +78,18 @@ On Linux, use:
 ## Virtual Environment
 
 It is recommended to use a virtual environment:
+
+### For Windows
+```
+venv\Scripts\activate     
+
+```
+
+### For Linux/macOS
+
 ```
 python -m venv venv
-source venv/bin/activate  # For Linux/macOS
+source venv/bin/activate  
 
 ```
 
-```
-venv\Scripts\activate     # For Windows
-
-```
