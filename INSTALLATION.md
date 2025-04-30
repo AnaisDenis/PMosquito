@@ -23,7 +23,7 @@ or
 
 	python3 --version
 
-If you see something like Python 3.10.x, Python is already installed. Otherwise, proceed to the next step.
+If you see something like Python 3.x.x, Python is already installed. Otherwise, proceed to the next step.
 
 ## Install Python
 
