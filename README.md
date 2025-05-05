@@ -195,6 +195,17 @@ The folder is organized as follows:
 		
 
 ```
+## Tests files
+
+The test folder includes several different data files.
+- jeu_test_trajectoires_fictifs.csv : This file contains 50 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is derived from functions allowing the creation of trajectories that can approximate those of a swarm of mosquitoes.
+  
+- jeu_test_semi_fictif.csv : This file contains 66 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is taken from real data but has been repositioned in time and selected because it lasted at least 30sec.
+
+- jeu_test_coupe_0.2.csv : These are the same trajectories as the previous file, but the fragments are segmented 0.2 seconds to the 20th second for all trajectories. This file can be compared to a technical tracking bug.
+
+- jeu_test_extrait_données_réelles.csv : This dataset is an extract from a csv file that represents our real data from mosquito video tracking.
+
 
 
 ## Output Files
