@@ -56,6 +56,7 @@ For beginners, follow our [Python installation guide](./INSTALLATION.md) to set 
 
 [Download PMosquito as a ZIP file](https://github.com/AnaisDenis/PMosquito/archive/refs/heads/main.zip)
 
+You can extract this folder to the directory of your choice: you will find the .zip file in your downloads. Move it by right-clicking, cutting, and pasting it into the directory of your choice. Then right-click and extract here.
 
 ### Install some packages
 Pmosquito works with some packages, you need to install them for this program to work.
