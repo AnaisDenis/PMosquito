@@ -236,7 +236,13 @@ You can customize trajectory reconstruction using the following parameters:
 
 Here's an example command to run the program:
 
-	C:\Your_path_to\PMosquito\ > python main.py path_to_your_file.csv
+	python main.py path_to_your_file.csv
+
+
+Make sure you're always in the Pmosquito file: your terminal command line should always start with C:\Your_path_to\PMosquito\ >
+If this isn't the case, don't forget to 
+	
+ 	cd path_name
 
 To add options, simply enter: "-- 	name of the option	 desired parameter"
 
