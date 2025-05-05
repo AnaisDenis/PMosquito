@@ -117,8 +117,17 @@ It is recommended to use a virtual environment:
 - Each virtual environment contains its own version of Python and its own packages, independent of other projects or the system installation. This prevents a package update for one project from breaking another.
 - You can install exactly the versions of libraries needed for one project without affecting others. Perfect for replicating an environment on another machine.
 
+In your terminal you need to move to the Pmosquito-main directory
+You must write in your terminal: 
+	
+ 	cd path_name
 
-To do this, in your terminal, go to your project folder, then type:
+**Note**: To find your path:
+Open File Explorer.
+Go to your project folder.
+Click in the address bar at the top: the path will appear.
+
+Then, type :
 
 	python -m venv env
 
@@ -142,18 +151,8 @@ You can extract this folder to the directory of your choice: you will find the .
 
 ### Install some packages
 Pmosquito works with some packages, you need to install them for this program to work.
-In your terminal you need to move to the Pmosquito-main directory
-You must write in your terminal: 
-	
-	cd path_name
 
-**Note**: To find your path:
-Open File Explorer.
-Go to your project folder.
-Click in the address bar at the top: the path will appear.
-
-
-Then you just need to copy and paste the following line into your terminal to install the packages: 
+You just need to copy and paste the following line into your terminal to install the packages: 
 
 	pip install -r requirements.txt
 
