@@ -170,17 +170,17 @@ The folder is organized as follows:
 ├── utils.py                  		# Utility functions (clustering, calculations, visualizations)
 ├── requirements.txt           		# Python dependencies
 └── Tests
-	├── jeu_test_coupe_0.2.csv	# interruption at the same time
-	├── jeu_test_extrait_données_réelles.csv #extracted from trajectory data from laboratory swarms
-	├── jeu_test_semi_fictif.csv	#trajectory set from laboratory swarm data
-	├── jeu_test_trajectoires_fictifs.csv #set of trajectories from mathematical functions aimed at reproducing a swarm
-	├── résultat_semi_fictif
-		├── jeu_test_semi_fictif_reconstitue.csv 
-		└── visualisation.png # swarm swarm visualization 
-	├── résultat_trajectoires_fictifs
-		├── jeu_test_moustiques_reconstitue.csv 
+	├── test_set_fictive.csv	
+	├── test_set_semi_fictionnal.csv
+	├── test_set_representing_a_tracking_bug.csv
+	├── test_set_extract_real_data.csv
+	├── result_test_set_fictive
+		├── test_set_fictive_reconstitue.csv 
 		└── visualisation.png # swarm swarm visualization
-	└── résultat_extrait_données_réeles
+	├── result_test_set_semi_fictionnal
+		├── test_set_semi_fictionnal_reconstitue.csv 
+		└── visualisation.png # swarm swarm visualization 
+	└── result_test_set_extract_real_data
 		├── debug
 			├── connexions_spatiotemporelles.csv 
 			├── connexions_valides.csv 
@@ -198,13 +198,13 @@ The folder is organized as follows:
 ## Tests files
 
 The test folder includes several different data files.
-- jeu_test_trajectoires_fictifs.csv : This file contains 50 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is derived from functions allowing the creation of trajectories that can approximate those of a swarm of mosquitoes.
+- test_set_fictive.csv : This file contains 50 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is derived from functions allowing the creation of trajectories that can approximate those of a swarm of mosquitoes.
   
-- jeu_test_semi_fictif.csv : This file contains 66 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is taken from real data but has been repositioned in time and selected because it lasted at least 30sec.
+- test_set_semi_fictionnal.csv : This file contains 66 initial trajectories divided into 4 fragments. The times associated with the trajectories are between t= 0s and t=30s. Each trajectory is taken from real data but has been repositioned in time and selected because it lasted at least 30sec.
 
-- jeu_test_coupe_0.2.csv : These are the same trajectories as the previous file, but the fragments are segmented 0.2 seconds to the 20th second for all trajectories. This file can be compared to a technical tracking bug.
+- test_set_representing_a_tracking_bug.csv : These are the same trajectories as the previous file, but the fragments are segmented 0.2 seconds to the 20th second for all trajectories. This file can be compared to a technical tracking bug.
 
-- jeu_test_extrait_données_réelles.csv : This dataset is an extract from a csv file that represents our real data from mosquito video tracking.
+- test_set_extract_real_data.csv : This dataset is an extract from a csv file that represents our real data from mosquito video tracking.
 
 
 
