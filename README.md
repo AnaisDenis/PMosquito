@@ -9,27 +9,27 @@ It supports both manual and automatic analysis based on clustering and proximity
 
 To use this code, you need a CSV file in the following format:
 
-- object: an integer identifier representing an object tracked over time.
+- **object**: an integer identifier representing an object tracked over time.
 
-- time: a decimal number representing the elapsed time in seconds.
+- **time**: a decimal number representing the elapsed time in seconds.
 
-- XSplined: the object's position along the X-axis (horizontal coordinate), expressed as a decimal number.
+- **XSplined**: the object's position along the X-axis (horizontal coordinate), expressed as a decimal number.
 
-- YSplined: the object's position along the Y-axis (vertical coordinate), expressed as a decimal number.
+- **YSplined**: the object's position along the Y-axis (vertical coordinate), expressed as a decimal number.
 
-- ZSplined: the object's position along the Z-axis (depth or height), expressed as a decimal number.
+- **ZSplined**: the object's position along the Z-axis (depth or height), expressed as a decimal number.
 
-- VXSplined: the object's velocity along the X-axis, expressed as a decimal number.
+- **VXSplined**: the object's velocity along the X-axis, expressed as a decimal number.
 
-- VYSplined: the object's velocity along the Y-axis, expressed as a decimal number.
+- **VYSplined**: the object's velocity along the Y-axis, expressed as a decimal number.
 
-- VZSpline: the object's velocity along the Z-axis, expressed as a decimal number.
+- **VZSplined**: the object's velocity along the Z-axis, expressed as a decimal number.
 
 Each row of the file therefore corresponds to the state of an object at a given moment, including its spatial position and velocity in all three dimensions.
 
 Example (excerpt):
 
-| object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSpline 	|
+| object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSplined 	|
 |---------------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
 | 1	 	| 3.151  	| 0.192		| -0.152	|-0.111		| 0.465 	| -0.050	| 0.403		|
 | 1 	 	| 3.171		| 0.201		| -0153		| -0.103	| 0.470		|-0.044		| 0.396	 	|
