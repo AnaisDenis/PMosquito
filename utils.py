@@ -287,8 +287,8 @@ def plot_reconstitute(csv_file, output_file="reconstitution_graphique.png"):
                     color=object_colors[obj]
                 )
 
-    plt.xlabel('Time')
-    plt.ylabel('Object')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Object (id)')
     plt.title('Reconstitution des trajectoires')
     plt.grid(True)
     plt.tight_layout()
@@ -351,9 +351,9 @@ def plot_transition_histograms(csv_file, time_output="histogram_time.png", dista
     # Histogramme des temps
     plt.figure(figsize=(10, 4))
     plt.hist(transition_durations, bins=30, color='steelblue', edgecolor='black')
-    plt.xlabel('Temps écoulé (secondes)')
-    plt.ylabel('Nombre de transitions')
-    plt.title('Histogramme des temps entre transitions de oldobject')
+    plt.xlabel('elapsed time (s)')
+    plt.ylabel('number of transitions')
+    plt.title('Histogram of gap times')
     plt.tight_layout()
     plt.savefig(time_output, dpi=300)
     print(f"Histogramme des temps sauvegardé sous : {os.path.abspath(time_output)}")
@@ -362,9 +362,9 @@ def plot_transition_histograms(csv_file, time_output="histogram_time.png", dista
     # Histogramme des distances
     plt.figure(figsize=(10, 4))
     plt.hist(transition_distances, bins=30, color='darkorange', edgecolor='black')
-    plt.xlabel('Distance 3D entre fin et début de oldobject')
-    plt.ylabel('Nombre de transitions')
-    plt.title('Histogramme des distances entre fragments de trajectoire')
+    plt.xlabel('distance between two fragments (m) ')
+    plt.ylabel('number of transitions')
+    plt.title('Histogram of distances between trajectory fragments')
     plt.tight_layout()
     plt.savefig(distance_output, dpi=300)
     print(f"Histogramme des distances sauvegardé sous : {os.path.abspath(distance_output)}")
@@ -408,13 +408,13 @@ def plot_mirrored_duration_histogram(csv_file, output_file="mirrored_duration_hi
 
     # Tracé
     plt.figure(figsize=(12, 6))
-    plt.bar(bin_centers, object_counts, width=width, color='mediumseagreen', label='Object', edgecolor='black')
-    plt.bar(bin_centers, -oldobject_counts, width=width, color='mediumpurple', label='Oldobject', edgecolor='black')
+    plt.bar(bin_centers, object_counts, width=width, color='mediumseagreen', label='final trajectory ', edgecolor='black')
+    plt.bar(bin_centers, -oldobject_counts, width=width, color='mediumpurple', label='initial trajectory', edgecolor='black')
 
     plt.axhline(0, color='black', linewidth=1)
-    plt.xlabel('Durée totale (secondes)')
-    plt.ylabel('Proportion normalisée')
-    plt.title('Histogramme miroir des durées totales (normalisé) : Object (haut) vs Oldobject (bas)')
+    plt.xlabel('Total duration (s)')
+    plt.ylabel('Normalized trajectory proportion')
+    plt.title('Mirror histogram of the total durations of each trajectory (normalized): final trajectory (top) vs. initial trajectory (bottom)')
     plt.legend(loc='upper right')
     plt.tight_layout()
     plt.savefig(output_file, dpi=300)
