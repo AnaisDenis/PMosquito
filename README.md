@@ -41,7 +41,6 @@ Example (excerpt):
 A terminal (or command prompt) is a tool that allows you to interact with your computer by typing text commands. Unlike a graphical interface (where you click buttons), the terminal allows you to execute specific instructions, such as launching a Python script, installing libraries, or navigating through your project folders.
 
 **Windows**: Press Windows + R, type cmd, and then press Enter.
-You can also use PowerShell or Visual Studio Code's built-in terminal (View menu > Terminal).
 
 **macOS**: Open the Terminal application via Spotlight (Cmd + Space, then type "Terminal").
 
@@ -70,7 +69,6 @@ Open File Explorer.
 Go to your project folder.
 Click in the address bar at the top: the path will appear.
 
-**Be careful** if your path contains spaces, use the terminal: windows + r
 
 Then you just need to copy and paste the following line into your terminal to install the packages: 
 
