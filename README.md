@@ -134,6 +134,8 @@ Then, type :
 Here, env is the name of the virtual environment. You can choose a different name if you wish.
 This creates an env/ folder containing an isolated Python installation.
 
+Then ypu need to activate your virtual environment. Type always in your terminal :
+
 **For Windows**
 
 	.\env\Scripts\activate
@@ -142,6 +144,7 @@ This creates an env/ folder containing an isolated Python installation.
 
 	source env/bin/activate
 
+Normally you should see your virtual environment name displayed in parentheses at the beginning of the new command line
 
 ### Retrieve this file containing the codes and test 
 
