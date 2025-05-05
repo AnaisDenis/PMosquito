@@ -110,7 +110,7 @@ On Linux, use:
 
 	sudo apt install python3-pip
 
-## Virtual Environment
+### Virtual Environment
 
 It is recommended to use a virtual environment:
 
