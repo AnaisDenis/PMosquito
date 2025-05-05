@@ -9,10 +9,23 @@ It supports both manual and automatic analysis based on clustering and proximity
 
 To use this code, you need a CSV file in the following format:
 
-| object 	| time 		| XSplined 	| YSplined 	| ZSplined 	| VXSplined 	| VYSplined 	| VZSpline 	|
-|---------------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
-| *int*  	| *float*   	| *float* 	| *float* 	| *float*  	| *float* 	| *float* 	| *float* 	|
-| Identifiant  	| time (s)  	| x position	| y position 	| z position	| x velocity 	| y velocity	| z velocity 	|
+- object: an integer identifier representing an object tracked over time.
+
+- time: a decimal number representing the elapsed time in seconds.
+
+- XSplined: the object's position along the X-axis (horizontal coordinate), expressed as a decimal number.
+
+- YSplined: the object's position along the Y-axis (vertical coordinate), expressed as a decimal number.
+
+- ZSplined: the object's position along the Z-axis (depth or height), expressed as a decimal number.
+
+- VXSplined: the object's velocity along the X-axis, expressed as a decimal number.
+
+- VYSplined: the object's velocity along the Y-axis, expressed as a decimal number.
+
+- VZSpline: the object's velocity along the Z-axis, expressed as a decimal number.
+
+Each row of the file therefore corresponds to the state of an object at a given moment, including its spatial position and velocity in all three dimensions.
 
 Example (excerpt):
 
