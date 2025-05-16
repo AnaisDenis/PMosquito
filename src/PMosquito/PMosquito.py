@@ -1,11 +1,16 @@
 import argparse
-from utils import *
+try:
+    # Try relative import (works after `pip install .`)
+    from .utils import *
+except ImportError:
+    # Fallback for direct script execution
+    from utils import *
 import pandas as pd
 import itertools
 import os
 
-
-if __name__ == "__main__":
+def main():
+    
     import argparse
 
 
@@ -86,3 +91,7 @@ if __name__ == "__main__":
         plot_reconstitute(output_file)
         plot_transition_histograms(output_file)
         plot_mirrored_duration_histogram(output_file)
+
+
+if __name__ == "__main__":
+    main()

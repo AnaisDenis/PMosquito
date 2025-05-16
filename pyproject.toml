@@ -12,7 +12,8 @@ version = "1.2"
 description = "This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data. It supports both manual and automatic analysis based on clustering and proximity parameters."
 authors = [{ name = "Anaïs Denis" }]
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { text = "Proprietary" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.8"
 dependencies = [
   "pandas",
@@ -23,4 +24,4 @@ dependencies = [
 ]
 
 [project.scripts]
-pmosquito = "main:main"
+pmosquito = "PMosquito.PMosquito:main"
