@@ -27,6 +27,6 @@ jobs:
       #- name: Checkout AGAT
       - uses: actions/checkout@v3
       - name: Install 
-        run: run pip install .
+        run: pip install .
       - name: test
         run: pmosquito -h
