@@ -154,14 +154,16 @@ Normally you should see your virtual environment name displayed in parentheses a
 
 You can extract this folder to the directory of your choice: you will find the .zip file in your downloads. Move it by right-clicking, cutting, and pasting it into the directory of your choice. Then right-click and extract here.
 
-### Install some packages
-Pmosquito works with some packages, you need to install them for this program to work.
+### Install Pmosquito
 
-You just need to copy and paste the following line into your terminal to install the packages: 
+Once your virtual environment is activated and you are in the project directory (the folder that contains `pyproject.toml`), install Pmosquito and its dependencies with:
 
-	pip install -r requirements.txt
+    pip install .
 
-Make sure the following packages are installed: pandas, numpy, scikit-learn, matplotlib, seaborn.
+This command will install:
+- the `Pmosquito` tool,
+- all required dependencies: `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`.
+
 
 ## Project Structure
 
@@ -251,7 +253,7 @@ You can customize trajectory reconstruction using the following parameters:
 
 Here's an example command to run the program:
 
-	python main.py path_to_your_file.csv
+	pmosquito path_to_your_file.csv
 
 
 Make sure you're always in the Pmosquito file: your terminal command line should always start with C:\Your_path_to\PMosquito\ >
