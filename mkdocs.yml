@@ -90,3 +90,5 @@ nav:
       - index.md
     - Install:
       - install.md
+    - Usage :
+      -usage.md
