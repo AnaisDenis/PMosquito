@@ -1,6 +1,7 @@
 # Welcome to PMosquito documentation!
 
-# PMosquito – Assembly of interrupted trajectory data by videotracking
+## PMosquito – Assembly of interrupted trajectory data by videotracking
+
 
 This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data.
 It supports both manual and automatic analysis based on clustering and proximity parameters.
