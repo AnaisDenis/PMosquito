@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.2", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["Tests"]
+
+[project]
+name = "Pmosquito"
+version = "1.2"
+description = "This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data. It supports both manual and automatic analysis based on clustering and proximity parameters."
+authors = [{ name = "Anaïs Denis" }]
+readme = { file = "README.md", content-type = "text/markdown" }
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.8"
+dependencies = [
+  "pandas",
+  "numpy",
+  "scikit-learn",
+  "matplotlib",
+  "seaborn"
+]
+
+[project.scripts]
+pmosquito = "PMosquito.PMosquito:main"
