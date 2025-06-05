@@ -3,7 +3,7 @@ site_name: PMosquito
 site_author: Anais Denis
 site_url: 'https://github.com/AnaisDenis/PMosquito'
 site_description: PMosquito
-site_dir: public # When you build your site, all of the files are written to the directory assigned to the site_dir configuration option (defaults to "site")
+site_dir: site# When you build your site, all of the files are written to the directory assigned to the site_dir configuration option (defaults to "site")
 docs_dir: doc # The directory that holds the documentation source files (the MkDocs documentation)
 
 # Repository
