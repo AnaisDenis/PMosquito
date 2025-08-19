@@ -8,7 +8,7 @@ Originally developed for 3D video tracking of mosquito swarms within the ANOFEEL
 A range of parameters can be customized to match the specific requirements of your study model.
 
 
-<img src="doc/img/IRD.png" width="300" height="100" /> <img src="doc/img/MIVEGEC.png" width="150" height="100" />
+<img src="doc/img/IRD.png" width="300" height="100" /> <img src="doc/img/MIVEGEC.png" width="150" height="100" /> <img src="doc/img/ANR.jpg" width="150" height="100" />
 
 ---
 
