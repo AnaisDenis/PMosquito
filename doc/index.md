@@ -6,7 +6,7 @@
 This project allows for the analysis, grouping, and reconstruction of mosquito trajectories using spatio-temporal data.
 It supports both manual and automatic analysis based on clustering and proximity parameters.
 
-<img src="img/IRD.png" width="300" height="100" /> <img src="img/MIVEGEC.png" width="150" height="100" />
+<img src="img/IRD.png" width="300" height="100" /> <img src="img/MIVEGEC.png" width="150" height="100" /> <img src="img/ANR.jpg" width="150" height="100" />
 
 ## Table of Contents
 
