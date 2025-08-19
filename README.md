@@ -3,7 +3,7 @@
 In tracking experiments, brief signal losses can occur. When tracking multiple, closely spaced objects, these interruptions can cause short, fragmented trajectories that are difficult—or even impossible—to assign to the correct object.
 
 PMosquito solves this challenge by reliably reconnecting broken trajectories, delivering longer and more complete paths for tracked object.
-Originally developed for 3D video tracking of mosquito swarms within the ANOFEEL project – How ANOpheles Females sEEk maLes? (ANR-15-CE35-0001-01) – TrackStitch can process any dataset that records the location of multiple objects in space and time, whether you are studying animal behavior, particle motion, swarm robotics, and more.
+Originally developed for 3D video tracking of mosquito swarms within the ANOFEEL project – How ANOpheles Females sEEk maLes? (ANR-15-CE35-0001-01) – PMosquito can process any dataset that records the location of multiple objects in space and time, whether you are studying animal behavior, particle motion, swarm robotics, and more.
 
 A range of parameters can be customized to match the specific requirements of your study model.
 
